@@ -99,6 +99,10 @@ static bool initPlayerWithUrl(const char url[]) {
 
     AVDictionary *opts = 0;
     av_dict_set(&opts, "rtsp_transport", "tcp", 0);
+    av_dict_set(&opts, "probesize", "2048", 0);
+    av_dict_set(&opts, "fflags", "nobuffer", 0);
+//    av_dict_set(&opts, "analyzeduration", "2000000", 0);
+    av_dict_set(&opts, "max_delay", "250000", 0);
 
     if (avformat_open_input(&iFormatContext, url, NULL, &opts) != 0) {
         ALOGD("avformat_open_input() failed \n");

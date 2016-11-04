@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import io.github.gaomjun.player.RTPlayer;
 
-public class MainActivity extends Activity implements SurfaceHolder.Callback {
+public class MainActivity extends Activity/* implements SurfaceHolder.Callback */{
     SurfaceHolder mSurfaceHolder;
     Button mPlayButton;
     Button mPauseButton;
@@ -31,7 +31,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
 
         SurfaceView surfaceView = (SurfaceView)findViewById(R.id.sf_view);
         mSurfaceHolder = surfaceView.getHolder();
-        mSurfaceHolder.addCallback(this);
 
         mPlayButton = (Button) findViewById(R.id.playButton);
         mPauseButton = (Button) findViewById(R.id.pauseButton);
@@ -49,7 +48,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                         playstatus = PLAYSTATUS.PAUSE;
                     }
                 } else {
-                    if (mRTPlayer.initPlayer(mSurfaceHolder.getSurface(), "rtmp://192.168.1.77:1935/gzhm/room")) {
+                    if (mRTPlayer.initPlayer(mSurfaceHolder.getSurface(), "rtsp://admin:admin@192.168.1.108")) {
                         initSuccess = true;
                         mRTPlayer.play();
                         playstatus = PLAYSTATUS.PLAYING;
@@ -91,23 +90,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
     protected void onPause() {
         super.onPause();
         mRTPlayer.stop();
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        if (mRTPlayer.initPlayer(mSurfaceHolder.getSurface(), "rtmp://192.168.1.77:1935/gzhm/room")) {
-            initSuccess = true;
-        }
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-
     }
 
     public enum PLAYSTATUS {
